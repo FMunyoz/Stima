@@ -2,30 +2,36 @@ LeerArchivos <- function(Directorio) {
   #Caso a estimar
   Estimacion <- read.csv2(paste(Directorio, "CasoEstimacion.csv", sep = "/"))
   
-  #Ley qendo Muestra
+  #Leyendo Muestra
   Muestra <- read.csv2(paste(Directorio, "DatosMuestra.csv", sep = "/"))
   #Leyendo Parametros de Calculo
   Parametros <- read.csv2(paste(Directorio, "ParametrosCalculo.csv", sep = "/"))
   list("Estimacion" = Estimacion, "Muestra" = Muestra, "Parametros" = Parametros)
 }
 
-SeleccionarVariables <- function(Muestra){
+SeleccionarVariables <- function(Muestra, Tipologia){
   
   #Si es de tipologia 2 se usa el numero de Dormitorios
-  Datos <- as.matrix(subset(Muestra, select = (c("ValorUnitarioDeMercado",
-                                        "NumeroDeBanos",
-                                        "NumeroDeDormitorios",
-                                        "SuperficieConstruidaDeLaVivienda",
-                                        "CosteDeConstruccionBrutoUnitarioVivienda",
-                                        "PorcentajeDepreciacionVivienda"))))
+  if (Tipologia == 1){
+    as.matrix(subset(Muestra, select = (c("ValorUnitarioDeMercado",
+                                                   "NumeroDeBanos",
+                                                   "SuperficieDeLaParcela",
+                                                   "SuperficieConstruidaDeLaVivienda",
+                                                   "CosteDeConstruccionBrutoUnitarioVivienda",
+                                                   "PorcentajeDepreciacionVivienda"))))
+  } 
+  else {
+    as.matrix(subset(Muestra, select = (c("ValorUnitarioDeMercado",
+                                                   "NumeroDeBanos",
+                                                   "NumeroDeDormitorios",
+                                                   "SuperficieConstruidaDeLaVivienda",
+                                                   "CosteDeConstruccionBrutoUnitarioVivienda",
+                                                   "PorcentajeDepreciacionVivienda"))))
+    
+  }
   
   #Si es de tipologia 1 se usa la superficie de la parcela
-  Datos <- as.matrix(subset(Muestra, select = (c("ValorUnitarioDeMercado",
-                                        "NumeroDeBanos",
-                                        "SuperficieDeLaParcela",
-                                        "SuperficieConstruidaDeLaVivienda",
-                                        "CosteDeConstruccionBrutoUnitarioVivienda",
-                                        "PorcentajeDepreciacionVivienda"))))
+
   
 }
 
@@ -51,17 +57,18 @@ SeleccionarOtrasVariables <- function(Muestra){
   
 }
 
-ObtieneDatosDelModelo <- function(ParametrosDelModelo){
+ObtieneDatosDelModelo <- function(ParametrosDelModelo, Tipologia){
   #Modelo AJ
-  #Tipologia: 1 = Unifamiliar, 2 = Multifamiliar
+  #Tipologia: 1 = Unifamiliar, 2 = Plurifamiliar
   #Calculo de valores minimos y maximos. Opcion de usar range
-  BetaUnifamiliar <- abs(subset(ParametrosDelModelo, Tipologia=="Unifamiliar" & Tipo=="beta", select = c(4:9)))
-  B_Unifamiliar <- subset(ParametrosDelModelo, Tipologia=="Unifamiliar" & Tipo=="b", select = c(4:9))
-  BetaUnifamiliar$cte <- sum(BetaUnifamiliar)
-  B_OtrasVariables <- subset(ParametrosDelModelo, Tipologia=="Plurifamiliar" & Tipo=="b", select = c(11:16))
+  TipoDeTipologia = ifelse(Tipologia == 1, "Unifamiliar", "Plurifamiliar")
+  Beta <- abs(subset(ParametrosDelModelo, Tipologia==TipoDeTipologia & Tipo=="beta", select = c(4:9)))
+  B <- subset(ParametrosDelModelo, Tipologia==TipoDeTipologia & Tipo=="b", select = c(4:9))
+  Beta$cte <- sum(Beta)
+  B_OtrasVariables <- subset(ParametrosDelModelo, Tipologia==TipoDeTipologia & Tipo=="b", select = c(11:16))
   
-  CoeficienteBase <- BetaUnifamiliar$cte
-  BetaUnifamiliar/CoeficienteBase
+  CoeficienteBase <- Beta$cte
+  Beta/CoeficienteBase
 }
 ObtieneOtrasVariables <- function(MatrizOtrasVariables){
   #OtrasVariablesCaso

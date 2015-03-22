@@ -1,8 +1,12 @@
-    Directorio = "C:/Users/federico.munyoz/Documents/TINSA/Documentos/WEB_1315155"
+#Directorio = "C:/Users/federico.munyoz/Documents/TINSA/Documentos/WEB_1314917"
+Directorio = "C:/Users/federico.munyoz/Documents/TINSA/Documentos/WEB_1314921"
+#Directorio = "C:/Users/federico.munyoz/Documents/TINSA/Documentos/WEB_1315155"
     ListaDeDatos <- LeerArchivos(Directorio)
+
+    TipologiaA_Estimar <- ListaDeDatos$Estimacion[,"Tipologia"]
         
-    Variables <- SeleccionarVariables(ListaDeDatos$Muestra)
-    VariablesCaso <- SeleccionarVariables(ListaDeDatos$Estimacion)
+    Variables <- SeleccionarVariables(ListaDeDatos$Muestra, TipologiaA_Estimar)
+    VariablesCaso <- SeleccionarVariables(ListaDeDatos$Estimacion, TipologiaA_Estimar)
     
     #Datos Auxiliares
     OtrasVariables <- SeleccionarOtrasVariables(ListaDeDatos$Muestra)
@@ -16,7 +20,7 @@
     
     BetaOtrasVariables <- subset(ListaDeDatos$Parametros, Tipologia=="Plurifamiliar" & Tipo=="beta", select = c(11:16))
     
-    Coeficientes <- ObtieneDatosDelModelo(ListaDeDatos$Parametros)
+    Coeficientes <- ObtieneDatosDelModelo(ListaDeDatos$Parametros, TipologiaA_Estimar)
     
     ValoresMinimos <- t(as.matrix(apply(LogaritmoVariables, 2, min)))
     ValoresMaximos <- t(as.matrix(apply(LogaritmoVariables, 2, max)))
