@@ -50,6 +50,43 @@ SeleccionarOtrasVariables <- function(Muestra){
   Datos
   
 }
+
+ObtieneDatosDelModelo <- function(ParametrosDelModelo){
+  #Modelo AJ
+  #Tipologia: 1 = Unifamiliar, 2 = Multifamiliar
+  #Calculo de valores minimos y maximos. Opcion de usar range
+  BetaUnifamiliar <- abs(subset(ParametrosDelModelo, Tipologia=="Unifamiliar" & Tipo=="beta", select = c(4:9)))
+  B_Unifamiliar <- subset(ParametrosDelModelo, Tipologia=="Unifamiliar" & Tipo=="b", select = c(4:9))
+  BetaUnifamiliar$cte <- sum(BetaUnifamiliar)
+  B_OtrasVariables <- subset(ParametrosDelModelo, Tipologia=="Plurifamiliar" & Tipo=="b", select = c(11:16))
+  
+  CoeficienteBase <- BetaUnifamiliar$cte
+  BetaUnifamiliar/CoeficienteBase
+}
+ObtieneOtrasVariables <- function(MatrizOtrasVariables){
+  #OtrasVariablesCaso
+  SinAscensor <- ifelse(MatrizOtrasVariables[,"NumeroDeAscensores"] == 0, 1, 0)
+  EsPlantaBaja <- ifelse(MatrizOtrasVariables[,"DatosDeLaPlanta"] == 5, 1, 0)
+  EsSemiSotano <- ifelse(MatrizOtrasVariables[,"DatosDeLaPlanta"] == 3, 1, 0)
+  EsInterior <- MatrizOtrasVariables[,"ExteriorInterior"] - 1
+  EsAtico <- ifelse(MatrizOtrasVariables[,"DatosDeLaPlanta"] > 1, 0, ifelse(MatrizOtrasVariables[,"NumeroDePlanta"] < 3, 0, 1))
+  NDePlanta <- ifelse(MatrizOtrasVariables[,"NumeroDePlanta"] < 1, 0, MatrizOtrasVariables[,"NumeroDePlanta"])
+  
+  cbind(MatrizOtrasVariables, SinAscensor, EsPlantaBaja, EsSemiSotano, EsInterior, EsAtico, NDePlanta)
+}
+
+CorreccionPorOtrasVariables <- function(VariablesDeLaMuestra, CasoEstimacion, Coeficientes){
+  MatrizCasoEstimacion <- CasoEstimacion[rep(row.names(CasoEstimacion), nrow(VariablesDeLaMuestra)), 1:10]
+  
+  SinAscensor <- exp((-VariablesDeLaMuestra[,"SinAscensor"]+MatrizCasoEstimacion[,"SinAscensor"])*Coeficientes$SinAscensor)
+  EsPlantaBaja <- exp((-VariablesDeLaMuestra[,"EsPlantaBaja"]+MatrizCasoEstimacion[,"EsPlantaBaja"])*Coeficientes$pbaja)
+  EsSemiSotano <- exp((-VariablesDeLaMuestra[,"EsSemiSotano"]+MatrizCasoEstimacion[,"EsSemiSotano"])*Coeficientes$pbaja)
+  EsInterior <- exp((-VariablesDeLaMuestra[,"EsInterior"]+MatrizCasoEstimacion[,"EsInterior"])*Coeficientes$interior)
+  EsAtico <- exp((-VariablesDeLaMuestra[,"EsAtico"]+MatrizCasoEstimacion[,"EsAtico"])*Coeficientes$Atico)
+  lPlanta <- exp((-VariablesDeLaMuestra[,"NDePlanta"]+MatrizCasoEstimacion[,"NDePlanta"])*Coeficientes$lplanta)
+  
+  SinAscensor * EsPlantaBaja * EsSemiSotano * EsInterior * EsAtico * lPlanta
+}
 GrabarTasacion <- function(Directorio, Muestra){
   N <- nrow(Muestra)
   Pesos <- sum(Muestra[,"Pesos"])
@@ -68,6 +105,8 @@ GrabarTasacion <- function(Directorio, Muestra){
   LimiteSuperior <- exp(LimiteSuperiorLog)
   PorcentajeDesviacionLimiteInferior <- (Estimacion - LimiteInferior)/Estimacion
   PorcentajeDesviacionLimiteSuperior <- (LimiteSuperior - Estimacion)/Estimacion
+  Estimacion <- c(Estimacion, LimiteInferior, LimiteSuperior, PorcentajeDesviacionLimiteInferior, PorcentajeDesviacionLimiteSuperior)
   write.table(Estimacion, paste(Directorio,  "Tasacion.csv", sep = "/"), dec = ",", row.names = FALSE, col.names = FALSE)
   Estimacion
 }
+
