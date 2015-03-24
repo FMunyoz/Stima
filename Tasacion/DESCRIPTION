@@ -1,0 +1,10 @@
+Package: Tasacion
+Type: Package
+Title: Genera una tasacion
+Version: 0.1
+Date: 2015-03-16
+Author: Federico Munyoz <federico.munyoz@innocv.com>
+Maintainer: Federico Munyoz <federico.munyoz@innocv.com>
+Description: Genera una tasacion aleatoria
+License: ---
+Encoding: latin1
