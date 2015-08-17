@@ -1,0 +1,24 @@
+CorreccionPorOtrasVariables
+                        CorreccionPorOtrasVariables
+GrabarTasacion          Graba la tasacion en un archivo Tasacion.csv
+LeerArchivos            Leer archivos con los datos para estimar la
+                        muestra
+ObtieneDatosDelModelo   Obtiene los coeficientes del modelo a partir de
+                        la tipologia a estimar y los parametros
+ObtieneOtrasVariables   Obtiene otras variables a partir de la muestra
+SeleccionarOtrasVariables
+                        Selecciona las variables NumeroDeAscensores,
+                        ExteriorInterior, NumeroDePlanta, y
+                        DatosDeLaPlanta de la muestra recibida
+SeleccionarVariables    Selecciona las variables
+                        ValorUnitarioDeMercado, NumeroDeBanos,
+                        SuperficieDeLaParcela,
+                        SuperficieConstruidaDeLaVivienda,
+                        CosteDeConstruccionBrutoUnitarioVivienda,
+                        PorcentajeDepreciacionVivienda y
+                        NumeroDeDormitorios de la muestra. Dependiendo
+                        de la tipologia del caso a estimar devuelve la
+                        SuperficieDeLaParcela o el NumeroDeDormitorios.
+Tasacion                Genera una tasacion
+Tasacion-package        Genera una tasacion
+TransformarVariables    Devuelve el logaritmo de las columnas recibidas

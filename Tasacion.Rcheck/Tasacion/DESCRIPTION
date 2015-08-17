@@ -1,0 +1,12 @@
+Package: Tasacion
+Type: Package
+Title: Genera una tasacion
+Version: 1.1
+Date: 2015-03-24
+Author: Federico Munyoz <federico.munyoz@innocv.com>
+Maintainer: Federico Munyoz <federico.munyoz@innocv.com>
+Description: Genera una tasacion a partir del caso a estimar, los parámetros del modelo y una muestra.
+License: ---
+Encoding: latin1
+Packaged: 2015-07-23 19:49:43 UTC; federico.munyoz
+Built: R 3.1.2; ; 2015-07-23 19:49:45 UTC; windows

@@ -1,0 +1,266 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8,latin1]{inputenc}
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `Tasacion'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{latin1}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Genera una tasacion}
+\item[Version]\AsIs{1.1}
+\item[Date]\AsIs{2015-03-24}
+\item[Author]\AsIs{Federico Munyoz }\email{federico.munyoz@innocv.com}\AsIs{}
+\item[Maintainer]\AsIs{Federico Munyoz }\email{federico.munyoz@innocv.com}\AsIs{}
+\item[Description]\AsIs{Genera una tasacion a partir del caso a estimar, los parámetros del modelo y una muestra.}
+\item[License]\AsIs{---}
+\item[Encoding]\AsIs{latin1}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{Tasacion-package}{Genera una tasacion}{Tasacion.Rdash.package}
+\aliasA{Tasacion}{Tasacion-package}{Tasacion}
+\keyword{package}{Tasacion-package}
+%
+\begin{Description}\relax
+Genera una tasacion a partir de 3 archivos csv ubicados en el directorio indicado:
+- El caso a estimar (CasoEstimacion.csv)
+- Los parametros del modelo (ParametrosCalculo.csv)
+- La muestra de tasaciones de la zona (DatosMuestra.csv)
+\end{Description}
+%
+\begin{Details}\relax
+
+\Tabular{ll}{
+Package: & Tasacion\\{}
+Type: & Package\\{}
+Version: & 1.0\\{}
+Date: & 2015-03-24\\{}
+License: & ---\\{}
+}
+Genera una tasacion a partir de un caso a estimar, unos parametros del modelo y una muestra.
+\end{Details}
+%
+\begin{Author}\relax
+Federico Munyoz
+
+Maintainer: Federico Munyoz <federico.munyoz@innocv.com>
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{CorreccionPorOtrasVariables}{CorreccionPorOtrasVariables}{CorreccionPorOtrasVariables}
+%
+\begin{Description}\relax
+Calcula el factor de correccion por otras variables
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+CorreccionPorOtrasVariables(VariablesDeLaMuestra, CasoEstimacion, Parametros)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{VariablesDeLaMuestra}] Matriz de variables de la muestra
+\item[\code{CasoEstimacion}] Caso a estimar
+\item[\code{Parametros}] Parametros de calculo del modelo
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Devuelve los valores de correccion para cada muestra
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{GrabarTasacion}{Graba la tasacion en un archivo Tasacion.csv}{GrabarTasacion}
+%
+\begin{Description}\relax
+A partir de la muestra con los parametros calculados procede a calcular la tasacion y grabar el archivo csv.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+GrabarTasacion(Directorio, Muestra)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Directorio}] Directorio donde se grabara el archivo Tasacion.csv
+\item[\code{Muestra}] Muestra con las columnas Pesos, PesosXwCorregido y PesosXwCorregidoCuadrado para realizar la estimacion
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Devuelve el archivo Tasacion.csv
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{LeerArchivos}{Leer archivos con los datos para estimar la muestra}{LeerArchivos}
+%
+\begin{Description}\relax
+Lee los archivos CasoEstimacion.csv, ParametrosCalculo.csv y DatosMuestra.csv en la ubicacion indicada.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+LeerArchivos(Directorio)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Directorio}] Directorio donde estan ubicados los archivos
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{ObtieneDatosDelModelo}{Obtiene los coeficientes del modelo a partir de la tipologia a estimar y los parametros}{ObtieneDatosDelModelo}
+%
+\begin{Description}\relax
+Obtiene los coeficientes del modelo a partir de la tipologia a estimar y los parametros
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ObtieneDatosDelModelo(ParametrosDelModelo, Tipologia)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ParametrosDelModelo}] Parametros del modelo para los calculos
+\item[\code{Tipologia}] Tipologia del caso a estimar
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{ObtieneOtrasVariables}{Obtiene otras variables a partir de la muestra}{ObtieneOtrasVariables}
+%
+\begin{Description}\relax
+Obtiene las siguientes variables de la muestra:  SinAscensor, EsPlantaBaja, EsSemiSotano, EsInterior, EsAtico, NDePlanta
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ObtieneOtrasVariables(MatrizOtrasVariables)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{MatrizOtrasVariables}] Muestra con los datos de otras variables
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{SeleccionarOtrasVariables}{Selecciona las variables NumeroDeAscensores, ExteriorInterior, NumeroDePlanta, y DatosDeLaPlanta de la muestra recibida}{SeleccionarOtrasVariables}
+%
+\begin{Usage}
+\begin{verbatim}
+SeleccionarOtrasVariables(Muestra)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Muestra}] Muestra de la que extraer las columnas NumeroDeAscensores, ExteriorInterior, NumeroDePlanta, y DatosDeLaPlanta
+
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{SeleccionarVariables}{Selecciona las variables ValorUnitarioDeMercado, NumeroDeBanos, SuperficieDeLaParcela, SuperficieConstruidaDeLaVivienda, CosteDeConstruccionBrutoUnitarioVivienda, PorcentajeDepreciacionVivienda y NumeroDeDormitorios de la muestra. Dependiendo de la tipologia del caso a estimar devuelve la SuperficieDeLaParcela o el NumeroDeDormitorios.}{SeleccionarVariables}
+%
+\begin{Description}\relax
+Selecciona las variables ValorUnitarioDeMercado, NumeroDeBanos, SuperficieDeLaParcela, SuperficieConstruidaDeLaVivienda, CosteDeConstruccionBrutoUnitarioVivienda, PorcentajeDepreciacionVivienda y NumeroDeDormitorios de la muestra. Dependiendo de la tipologia del caso a estimar devuelve la SuperficieDeLaParcela o el NumeroDeDormitorios.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+SeleccionarVariables(Muestra, Tipologia)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Muestra}] Muestra de la que extraer las columnas indicadas.
+
+\item[\code{Tipologia}] Tipologia del caso a estimar
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{Tasacion}{Genera una tasacion}{Tasacion}
+%
+\begin{Description}\relax
+Genera una tasacion a partir de 3 archivos csv ubicados en el directorio indicado:
+- El caso a estimar (CasoEstimacion.csv)
+- Los parametros del modelo (ParametrosCalculo.csv)
+- La muestra de tasaciones de la zona (DatosMuestra.csv)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+Tasacion(Directorio)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Directorio}] 
+Directorio en el que estan ubicados los archivos CasoEstimacion.csv, ParametrosCalculo.csv y DatosMuestra.csv
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Cabecera de los archivos csv (separador es el punto y coma)
+
+CasoEstimacion.csv
+-------------------
+V005;FechaDeCierre;NumeroDeExpediente;ValorUnitarioDeMercado;NumeroDeBanos;NumeroDeDormitorios;SuperficieConstruidaDeLaVivienda;CosteDeConstruccionBrutoUnitarioVivienda;PorcentajeDepreciacionVivienda;NumeroDeAscensores;Tipologia;SuperficieDeLaParcela;DatosDeLaPlanta;NumeroDePlanta;ExteriorInterior
+
+DatosMuestra.csv
+-----------------
+FechaDeCierre;NumeroDeExpediente;ValorUnitarioDeMercado;NumeroDeBanos;NumeroDeDormitorios;SuperficieConstruidaDeLaVivienda;CosteDeConstruccionBrutoUnitarioVivienda;PorcentajeDepreciacionVivienda;NumeroDeAscensores;Tipologia;SuperficieDeLaParcela;DatosDeLaPlanta;NumeroDePlanta;TipoZona;idZona;CodZona;Distancia;CodZonaReferencia;ExteriorInterior
+
+ParametrosCalculo.csv
+---------------------
+Tipologia;Tipo;Fecha;x1;x2;x3;x4;x5;cte;media zona;SinAscensor;EsPlantaBaja;EsSemiSotano;EsInterior;EsAtico;NDePlanta
+
+La tasacion se graba en un archivo Tasacion.csv en el mismo directorio Sin cabecera con la siguiente informacion:
+
+Valor Estimado
+Valor Estimado Inferior
+Valor Estimado Superior
+Valor Estimado Inferior (en tanto por 1)
+Valor esitmado Superior (en tanto por 1)
+\end{Details}
+%
+\begin{Value}
+Devuelve la siguiente informacion
+
+Valor Estimado
+Valor Estimado Inferior
+Valor Estimado Superior
+Valor Estimado Inferior (en tanto por 1)
+Valor esitmado Superior (en tanto por 1)
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{TransformarVariables}{Devuelve el logaritmo de las columnas recibidas}{TransformarVariables}
+%
+\begin{Usage}
+\begin{verbatim}
+TransformarVariables(Muestra)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Muestra}] Muestra de la que devolver el logaritmo
+\end{ldescription}
+\end{Arguments}
+\printindex{}
+\end{document}
