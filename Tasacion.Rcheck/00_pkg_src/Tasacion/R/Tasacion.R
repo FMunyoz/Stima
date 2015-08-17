@@ -20,17 +20,12 @@ Tasacion <- function(Directorio){
   OtrasVariablesCaso[is.na(OtrasVariablesCaso[,"NumeroDePlanta"]), "NumeroDePlanta"] <- TotalDePlantaParaElementosConValor7/ElementosConValor7
   if(OtrasVariablesCaso[,"DatosDeLaPlanta"] == 0) OtrasVariablesCaso[,"DatosDeLaPlanta"] <-  5
   
-  VariablesCasoTransformadas <- TransformarVariables(VariablesCaso)
+
   VariablesMuestraTransformadas <- TransformarVariables(Variables)
+  VariablesCasoTransformadas <- TransformarCaso(VariablesCaso, VariablesMuestraTransformadas)
   
   Coeficientes <- ObtieneDatosDelModelo(ListaDeDatos$Parametros, TipologiaEstimacion)
-  Medias <- t(as.matrix(apply(VariablesMuestraTransformadas, 2, mean)))
-  
-  # Se asigna valor a CosteDeConstruccionBrutoUnitarioVivienda porque no tiene datos
-  
-  VariablesCasoTransformadas[1,"CosteDeConstruccionBrutoUnitarioVivienda"] = Medias[1,"CosteDeConstruccionBrutoUnitarioVivienda"]
-  
-  
+
   ValoresMinimos <- t(as.matrix(apply(rbind(VariablesMuestraTransformadas, VariablesCasoTransformadas), 2, min)))
   ValoresMaximos <- t(as.matrix(apply(rbind(VariablesMuestraTransformadas, VariablesCasoTransformadas), 2, max)))
   Rangos <- ValoresMaximos - ValoresMinimos

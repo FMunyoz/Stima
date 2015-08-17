@@ -1,5 +1,5 @@
 CalcularCalidadTasacion <- function(CasoA_Estimar, Muestra, MuestraSeleccionada, Coeficientes, CasoTransformado){
-  
+
   ColumnaDependienteDeTipologia <-  ifelse("NumeroDeDormitorios" %in% colnames(CasoTransformado),
                                            "NumeroDeDormitorios",
                                            "SuperficieDeLaParcela")
@@ -15,7 +15,9 @@ CalcularCalidadTasacion <- function(CasoA_Estimar, Muestra, MuestraSeleccionada,
                                "PorcentajeDepreciacionVivienda")]
   MuestraCalidad <- rbind(CasoTransformado, MuestraCalidad)
   MuestraCalidadEstandarizada <- scale(MuestraCalidad, center = TRUE, scale = TRUE)[,c(1:5)]
-  MuestraCalidadEstandarizada <- cbind(MuestraCalidadEstandarizada, Muestra[,"Pesos"][match(rownames(MuestraCalidadEstandarizada),rownames(Muestra))])
+  MuestraCalidadEstandarizada[is.nan(MuestraCalidadEstandarizada)] <- 0
+  MuestraCalidadEstandarizada <- 
+    cbind(MuestraCalidadEstandarizada, Muestra[,"Pesos"][match(rownames(MuestraCalidadEstandarizada),rownames(Muestra))])
   colnames(MuestraCalidadEstandarizada)[6] <- "Pesos"
   CalculoCentroDeGravedad <- MuestraCalidadEstandarizada[,1:5] * MuestraCalidadEstandarizada[,"Pesos"]
   CalculoNivelConfianza <- CalculoCentroDeGravedad

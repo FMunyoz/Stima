@@ -1,10 +1,10 @@
 * using log directory 'C:/Users/federico.munyoz/Documents/Stima/Tasacion.Rcheck'
-* using R version 3.1.2 (2014-10-31)
+* using R version 3.2.1 (2015-06-18)
 * using platform: x86_64-w64-mingw32 (64-bit)
 * using session charset: ISO8859-1
 * checking for file 'Tasacion/DESCRIPTION' ... OK
 * checking extension type ... Package
-* this is package 'Tasacion' version '1.1'
+* this is package 'Tasacion' version '1.2'
 * package encoding: latin1
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -31,7 +31,6 @@ Standardizable: FALSE
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
-* checking loading without being on the library search path ... OK
 * checking dependencies in R code ... OK
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -136,8 +135,9 @@ Rd files with duplicated alias 'Tasacion':
 * checking for missing documentation entries ... WARNING
 Undocumented code objects:
   'CalcularCalidadTasacion' 'CalcularTasacion' 'ObtieneDatos'
+  'TransformarCaso'
 All user-level objects in a package should have documentation entries.
-See the chapter 'Writing R documentation files' in the 'Writing R
+See chapter 'Writing R documentation files' in the 'Writing R
 Extensions' manual.
 * checking for code/documentation mismatches ... OK
 * checking Rd \usage sections ... OK
@@ -149,3 +149,5 @@ LaTeX errors when creating PDF version.
 This typically indicates Rd problems.
 * checking PDF version of manual without hyperrefs or index ... ERROR
 Re-running with no redirection of stdout/stderr.
+* DONE
+Status: 1 ERROR, 5 WARNINGs, 1 NOTE
