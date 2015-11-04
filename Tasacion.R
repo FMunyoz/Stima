@@ -1,4 +1,5 @@
 Tasacion <- function(Directorio){
+  Directorio <- "c:/tmp/Tasacion/Caso"
   #Carga todas las funciones
   sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source);
   ListaDeDatos <- LeerArchivos(Directorio)
@@ -34,6 +35,7 @@ Tasacion <- function(Directorio){
   ValoresMinimos <- t(as.matrix(apply(rbind(LogaritmoVariables, LogaritmoVariablesCaso), 2, min)))
   ValoresMaximos <- t(as.matrix(apply(rbind(LogaritmoVariables, LogaritmoVariablesCaso), 2, max)))
   Rangos <- ValoresMaximos - ValoresMinimos
+  Rangos[Rangos==0] <- 1 
   rownames(Rangos) <- "1"
   B_Unifamiliar <- subset(ListaDeDatos$Parametros, Tipologia=="Unifamiliar" & Tipo=="b", select = c(4:9))
   
@@ -66,7 +68,7 @@ Tasacion <- function(Directorio){
   p_original <- as.matrix(abs(log(Distancia))/log(1/DatoCoeficiente))
   colnames(p_original) <- "p_original"
   
-  Tipologia <- as.matrix(ListaDeDatos$Muestra[,"Tipologia"])
+  Tipologia <- as.matrix(ListaDeDatos$Muestra[,"Tipologia"] <- TipologiaEstimacion)
   colnames(Tipologia) <- "Tipologia"
   LogaritmoVariables <- cbind(LogaritmoVariables, Distancia, Ly_Transformada, p_original, Tipologia)
   

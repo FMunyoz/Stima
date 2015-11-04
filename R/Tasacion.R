@@ -26,16 +26,8 @@ Tasacion <- function(Directorio){
   
   Coeficientes <- ObtieneDatosDelModelo(ListaDeDatos$Parametros, TipologiaEstimacion)
 
-  ValoresMinimos <- t(as.matrix(apply(rbind(VariablesMuestraTransformadas, VariablesCasoTransformadas), 2, min)))
-  ValoresMaximos <- t(as.matrix(apply(rbind(VariablesMuestraTransformadas, VariablesCasoTransformadas), 2, max)))
-  Rangos <- ValoresMaximos - ValoresMinimos
-  rownames(Rangos) <- "1"
-  B_Unifamiliar <- subset(ListaDeDatos$Parametros, Tipologia=="Unifamiliar" & Tipo=="b", select = c(4:9))
-  
-  
-  CotaDistancia <- (VariablesCasoTransformadas / (1000 * Rangos))^2
-  # 
-  DatoCoeficiente <- sum(CotaDistancia[,2:6] * Coeficientes[,1:5])
+  Rangos <- ObtieneRangosDelModelo_aj(VariablesMuestraTransformadas, VariablesCasoTransformadas)
+  DatoCoeficiente <- ObtieneCoeficienteDelModelo_aj(VariablesCasoTransformadas, Rangos, Coeficientes)
   
   #Distancia
   MatrizDatosCaso <- VariablesCasoTransformadas[rep(row.names(VariablesCasoTransformadas), nrow(Variables)), 1:6]
